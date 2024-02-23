@@ -8,6 +8,8 @@
 
 This is the official repository for the ICLR 2024 paper "[Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition](https://arxiv.org/pdf/2402.14505.pdf)".
 
+The usage of this repo is similar to the [Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark). You can refer to it to prepare datasets.
+
 ## Train
 
 ## Test
@@ -16,7 +18,8 @@ This is the official repository for the ICLR 2024 paper "[Towards Seamless Adapt
 
 ## Acknowledgements
 
-## Bibtex
+## Citation
+If you find this repo useful for your research, please consider citing the paper
 ```
 @inproceedings{selavpr,
   title={Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition},
