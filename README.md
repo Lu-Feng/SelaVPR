@@ -8,6 +8,7 @@
 
 This is the official repository for the ICLR 2024 paper "[Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition](https://arxiv.org/pdf/2402.14505.pdf)".
 
+This repo follows the [Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark). You can refer to it to prepare datasets.
 
 ## Train
 Download the pre-trained foundation model [DINOv2(ViT-L/14)](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_pretrain.pth)
