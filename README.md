@@ -16,6 +16,9 @@ Download the pre-trained foundation model [DINOv2(ViT-L/14)](https://dl.fbaipubl
 ## Test
 
 ## Trained Models
+The [model](https://drive.google.com/file/d/1FVb633PgbXsn-lASTANSGKQ46-vh3wla/view?usp=sharing) finetuned on MSLS (for diverse scenes).
+
+The [model](https://drive.google.com/file/d/1kqOJaxHZbh6bSY4J1Hrymjg9S9ZxsrWv/view?usp=sharing) further finetuned on Pitts30k (only for urban scenes, e.g. Pitts30k, Pitss250k, and Tokyo24/7).
 
 ## Acknowledgements
 
