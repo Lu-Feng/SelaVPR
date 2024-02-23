@@ -7,3 +7,21 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/towards-seamless-adaptation-of-pre-trained/visual-place-recognition-on-st-lucia)](https://paperswithcode.com/sota/visual-place-recognition-on-st-lucia?p=towards-seamless-adaptation-of-pre-trained)
 
 This is the official repository for the ICLR 2024 paper "[Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition](https://arxiv.org/pdf/2402.14505.pdf)".
+
+## Train
+
+## Test
+
+## Trained Models
+
+## Acknowledgements
+
+## Bibtex
+```
+@inproceedings{selavpr,
+  title={Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition},
+  author={Lu, Feng and Zhang, Lijun and Lan, Xiangyuan and Dong, Shuting and Wang, Yaowei and Yuan, Chun},
+  booktitle={The Twelfth International Conference on Learning Representations},
+  year={2024}
+}
+```
