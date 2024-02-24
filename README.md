@@ -8,13 +8,49 @@
 
 This is the official repository for the ICLR 2024 paper "[Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition](https://arxiv.org/pdf/2402.14505.pdf)".
 
+## Getting Started
+
 This repo follows the [Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark). You can refer to it ([VPR-datasets-downloader](https://github.com/gmberton/VPR-datasets-downloader)) to prepare datasets.
 
-Download the pre-trained foundation model [DINOv2(ViT-L/14)](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_pretrain.pth)
+The dataset should be organized in a directory tree as such:
+
+```
+├── datasets_vg
+    └── datasets
+        └── pitts30k
+            └── images
+                ├── train
+                │   ├── database
+                │   └── queries
+                ├── val
+                │   ├── database
+                │   └── queries
+                └── test
+                    ├── database
+                    └── queries
+```
+
+Before training, you should download the pre-trained foundation model DINOv2(ViT-L/14) [here](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_pretrain.pth).
 
 ## Train
 
+Finetuning on MSLS
+
+```
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=msls --queries_per_epoch=30000 --foundation_model_path /path/to/pre-trained/dinov2_vitl14_pretrain.pth
+```
+
+Further finetuning on Pitts30k
+
+```
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume /path/to/finetuned/msls/model/SelaVPR_msls.pth
+```
+
 ## Test
+
+```
+python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume /path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth
+```
 
 ## Trained Models
 The model finetuned on MSLS (for diverse scenes).
@@ -40,7 +76,7 @@ The model finetuned on MSLS (for diverse scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1FVb633PgbXsn-lASTANSGKQ46-vh3wla/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/17kAOZi-bCucnQvH4shCxeFvdMpaVh0ud/view?usp=sharing">LINK</a></td>
     <td>90.8</td>
     <td>96.4</td>
     <td>97.2</td>
@@ -91,8 +127,10 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </tbody>
 </table>
 
-
 ## Acknowledgements
+Parts of this repo are inspired by the following repositories:
+[Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark)
+[DINOv2](https://github.com/facebookresearch/dinov2)
 
 ## Citation
 If you find this repo useful for your research, please consider citing the paper
