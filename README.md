@@ -129,7 +129,9 @@ The model further finetuned on Pitts30k (only for urban scenes).
 
 ## Acknowledgements
 Parts of this repo are inspired by the following repositories:
+
 [Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark)
+
 [DINOv2](https://github.com/facebookresearch/dinov2)
 
 ## Citation
