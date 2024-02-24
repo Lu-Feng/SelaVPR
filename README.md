@@ -30,7 +30,7 @@ The dataset should be organized in a directory tree as such:
                     └── queries
 ```
 
-Before training, you should download the pre-trained foundation model DINOv2(ViT-L/14) [here](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_pretrain.pth).
+Before training, you should download the pre-trained foundation model DINOv2(ViT-L/14) [HERE](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_pretrain.pth).
 
 ## Train
 
