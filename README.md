@@ -113,7 +113,7 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1kqOJaxHZbh6bSY4J1Hrymjg9S9ZxsrWv/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1XlkNP5MIreid30T_dDmvs1Xdg6wv2aCj/view?usp=sharing">LINK</a></td>
     <td>94.0</td>
     <td>96.8</td>
     <td>97.5</td>
