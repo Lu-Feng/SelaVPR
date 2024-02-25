@@ -76,7 +76,7 @@ The model finetuned on MSLS (for diverse scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/17kAOZi-bCucnQvH4shCxeFvdMpaVh0ud/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1wEJ69hl1vkaALGYNTt0vNkdHUnHcFal_/view?usp=sharing">LINK</a></td>
     <td>90.8</td>
     <td>96.4</td>
     <td>97.2</td>
