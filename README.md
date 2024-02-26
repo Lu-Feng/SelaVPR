@@ -76,7 +76,7 @@ The model finetuned on MSLS (for diverse scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1wEJ69hl1vkaALGYNTt0vNkdHUnHcFal_/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1_pB-cYMcdPoO2RK1KM0lD7zC7jXQd2ac/view?usp=sharing">LINK</a></td>
     <td>90.8</td>
     <td>96.4</td>
     <td>97.2</td>
@@ -113,7 +113,7 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1XlkNP5MIreid30T_dDmvs1Xdg6wv2aCj/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1w-fc9_SPlAmzjY25CwFGTqEW3IDddTtb/view?usp=sharing">LINK</a></td>
     <td>94.0</td>
     <td>96.8</td>
     <td>97.5</td>
