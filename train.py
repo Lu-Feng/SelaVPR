@@ -87,11 +87,6 @@ else:
 
 logging.info(f"Output dimension of the model is {args.features_dim}")
 
-if torch.cuda.device_count() >= 2:
-    # When using more than 1GPU, use sync_batchnorm for torch.nn.DataParallel
-    model = convert_model(model)
-    model = model.cuda()
-
 #### Training loop
 for epoch_num in range(start_epoch_num, args.epochs_num):
     logging.info(f"Start training epoch: {epoch_num:02d}")
