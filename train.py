@@ -18,7 +18,6 @@ import parser
 import commons
 import datasets_ws
 import network
-from sync_batchnorm import convert_model
 import warnings
 warnings.filterwarnings('ignore')
 from loss import LocalFeatureLoss
