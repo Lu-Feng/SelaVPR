@@ -14,6 +14,7 @@ This is the official repository for the ICLR 2024 paper "[Towards Seamless Adapt
 This paper presents a novel method to realize **Se**am**l**ess **a**daptation of pre-trained foundation models for the (two-stage) VPR task, named **SelaVPR**. By adding a few tunable lightweight adapters to the frozen pre-trained model, we achieve an efficient hybrid global-local adaptation to get both global features for retrieving candidate places and dense local features for re-ranking. The SelaVPR feature representation can focus on discriminative landmarks, thus closing the gap between the pre-training and VPR tasks (fully unleash the capability of pre-trained models for VPR). SelaVPR can directly match the local features without spatial verification, making the re-ranking much faster.
 
 The global adaptation is achieved by adding adapters after the multi-head attention layer and in parallel to the MLP layer in each transformer block (see adapter1 and adapter2 in /backbone/dinov2/block.py).
+
 The local adaptation is implemented by adding up-convolutional layers after the entire ViT backbone to upsample the feature map and get dense local features (see LocalAdapt in network.py).
 
 ## Getting Started
