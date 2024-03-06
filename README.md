@@ -39,19 +39,19 @@ Before training, you should download the pre-trained foundation model DINOv2(ViT
 Finetuning on MSLS
 
 ```
-python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=msls --queries_per_epoch=30000 --foundation_model_path /path/to/pre-trained/dinov2_vitl14_pretrain.pth
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=msls --queries_per_epoch=30000 --foundation_model_path=/path/to/pre-trained/dinov2_vitl14_pretrain.pth
 ```
 
 Further finetuning on Pitts30k
 
 ```
-python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume /path/to/finetuned/msls/model/SelaVPR_msls.pth
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth
 ```
 
 ## Test
-
+Set rerank_num=100 to reproduce the results in paper, and set rerank_num=20 to achieve a close result with only 1/5 re-ranking runtime.
 ```
-python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume /path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth
+python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100
 ```
 
 ## Trained Models
@@ -78,7 +78,7 @@ The model finetuned on MSLS (for diverse scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1_pB-cYMcdPoO2RK1KM0lD7zC7jXQd2ac/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1vy05l0JTEgr6n8iSoz_P_yjWfEzFPAkV/view?usp=sharing">LINK</a></td>
     <td>90.8</td>
     <td>96.4</td>
     <td>97.2</td>
@@ -115,7 +115,7 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </thead>
 <tbody>
   <tr>
-    <th rowspan="3"><a href="https://drive.google.com/file/d/1w-fc9_SPlAmzjY25CwFGTqEW3IDddTtb/view?usp=sharing">LINK</a></td>
+    <th rowspan="3"><a href="https://drive.google.com/file/d/1LKTZZRHfMH3dY3UPagCt2TIlMN5LguGO/view?usp=sharing">LINK</a></td>
     <td>94.0</td>
     <td>96.8</td>
     <td>97.5</td>
