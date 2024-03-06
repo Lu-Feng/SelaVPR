@@ -24,7 +24,7 @@ def gem(x, p=3, eps=1e-6, work_with_tokens=False):
     else:
         return F.avg_pool2d(x.clamp(min=eps).pow(p), (x.size(-2), x.size(-1))).pow(1./p)
 
-class Flatten(torch.nn.Module):
+class Flatten(nn.Module):
     def __init__(self): super().__init__()
     def forward(self, x): assert x.shape[2] == x.shape[3] == 1; return x[:,:,0,0]
 
@@ -34,7 +34,20 @@ class L2Norm(nn.Module):
         self.dim = dim
     def forward(self, x):
         return F.normalize(x, p=2, dim=self.dim)
-    
+
+class LocalAdapt(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.upconv1 = torch.nn.ConvTranspose2d(in_channels=1024, out_channels=256, kernel_size=3, stride=2, padding=1)
+        self.upconv2 = torch.nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1)
+        self.relu = nn.ReLU(inplace=True)
+    def forward(self,x):
+        x = self.upconv1(x)
+        x = self.relu(x)
+        x = self.upconv2(x)
+        return x
+
+
 class GeoLocalizationNet(nn.Module):
     """The used networks are composed of a backbone and an aggregation layer.
     """
@@ -42,9 +55,7 @@ class GeoLocalizationNet(nn.Module):
         super().__init__()
         self.backbone = get_backbone(args)
         self.aggregation = nn.Sequential(L2Norm(), GeM(work_with_tokens=None), Flatten())
-        self.upconv = torch.nn.ConvTranspose2d(in_channels=1024, out_channels=256, kernel_size=3, stride=2, padding=1)
-        self.upconv2 = torch.nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=3, stride=2, padding=1)
-        self.relu = nn.ReLU(inplace=True)
+        self.LocalAdapt = LocalAdapt()
 
     def forward(self, x):
         x = self.backbone(x)
@@ -55,9 +66,7 @@ class GeoLocalizationNet(nn.Module):
         global_feature = torch.nn.functional.normalize(x1, p=2, dim=-1)
 
         x0 = patch_feature.permute(0, 3, 1, 2)
-        x0 = self.upconv(x0)
-        x0 = self.relu(x0)
-        x0 = self.upconv2(x0)
+        x0 = self.LocalAdapt(x0)
         x0 = x0.permute(0, 2, 3, 1)
         local_feature = torch.nn.functional.normalize(x0, p=2, dim=-1)
         return local_feature, global_feature
@@ -73,4 +82,3 @@ def get_backbone(args):
         backbone.load_state_dict(model_dict)
     args.features_dim = 1024
     return backbone
-
