@@ -8,6 +8,10 @@
 #   https://github.com/facebookresearch/dino/blob/master/vision_transformer.py
 #   https://github.com/rwightman/pytorch-image-models/tree/master/timm/layers/patch_embed.py
 
+
+# In SelaVPR, adapters (Serial adapter and Parallel adapter) are inserted into the standard transformer block
+# for global adaptation.
+
 import logging
 from typing import Callable, List, Any, Tuple, Dict
 
@@ -32,7 +36,7 @@ except ImportError:
     logger.warning("xFormers not available")
     XFORMERS_AVAILABLE = False
 
-class Adapter(nn.Module):
+class Adapter(nn.Module):  # Adapter is used to add to the transformer block for global adaptation
     def __init__(self, D_features, mlp_ratio=0.75, act_layer=nn.ReLU, skip_connect=True):
         super().__init__()
         self.skip_connect = skip_connect
