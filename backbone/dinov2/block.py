@@ -38,6 +38,7 @@ except ImportError:
 
 class Adapter(nn.Module):  # Adapter is used to add to the transformer block for global adaptation
     def __init__(self, D_features, mlp_ratio=0.75, act_layer=nn.ReLU, skip_connect=True):
+        # mlp_ratio is the bottleneck ratio of adapters
         super().__init__()
         self.skip_connect = skip_connect
         D_hidden_features = int(D_features * mlp_ratio)
@@ -103,15 +104,15 @@ class Block(nn.Module):
 
         self.sample_drop_ratio = drop_path
 
-        self.adapter1 = Adapter(dim, mlp_ratio=0.5)  #Serial adapter
-        self.adapter2 = Adapter(dim, mlp_ratio=0.5, skip_connect=False)  #Parallel adapter
+        self.adapter1 = Adapter(dim, mlp_ratio=0.5)  # Serial adapter
+        self.adapter2 = Adapter(dim, mlp_ratio=0.5, skip_connect=False)  # Parallel adapter
 
     def forward(self, x: Tensor) -> Tensor:
         def attn_residual_func(x: Tensor) -> Tensor:
             return self.ls1(self.adapter1(self.attn(self.norm1(x))))
 
         def ffn_residual_func(x: Tensor) -> Tensor:
-            return self.ls2(self.mlp(self.norm2(x))+0.2*self.adapter2(self.norm2(x)))
+            return self.ls2(self.mlp(self.norm2(x))+0.2*self.adapter2(self.norm2(x)))  # 0.2 is the scaling factor for Parallel adapter
 
         if self.training and self.sample_drop_ratio > 0.1:
             # the overhead is compensated only for a drop path rate larger than 0.1
