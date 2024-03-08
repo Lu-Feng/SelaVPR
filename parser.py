@@ -44,7 +44,9 @@ def parse_arguments():
     # Other parameters
     parser.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"])
     parser.add_argument("--num_workers", type=int, default=8, help="num_workers for all dataloaders")
-    parser.add_argument('--resize', type=int, default=[224,224], nargs=2, help="Resizing shape for images (HxW).") #240, 320
+    parser.add_argument('--resize', type=int, default=[224,224], nargs=2, help="Resizing shape for images (HxW).")
+    parser.add_argument('--dense_feature_map_size', type=int, default=[61,61,128], nargs=3, 
+                        help="size of dense feature map (a 61x61 grid 128-dim local features)")
     parser.add_argument('--test_method', type=str, default="hard_resize",
                         choices=["hard_resize", "single_query", "central_crop", "five_crops", "nearest_crop", "maj_voting"],
                         help="This includes pre/post-processing methods and prediction refinement")
