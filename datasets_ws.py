@@ -261,7 +261,8 @@ class TripletsDataset(BaseDataset):
         # RAMEfficient2DMatrix can be replaced by np.zeros, but using
         # RAMEfficient2DMatrix is RAM efficient for full database mining.
         cache = RAMEfficient2DMatrix(cache_shape, dtype=np.float32)
-        cache_local_shape = [cache_shape[0],61,61,128]
+        W, H, C = args.dense_feature_map_size
+        cache_local_shape = [cache_shape[0],W, H, C]
         cache_local = RAMEfficient4DMatrix(cache_local_shape, dtype=np.float32)
         with torch.no_grad():
             for images, indexes in tqdm(subset_dl, ncols=100):              
