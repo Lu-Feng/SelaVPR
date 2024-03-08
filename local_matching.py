@@ -68,11 +68,11 @@ def local_sim(features_1, features_2, trainflag=False):
         similarity = torch.zeros(B).cuda()
         for i in range(B):
             query,pred = queries[i],preds[i].unsqueeze(0)
-            similarity[i] = match_batch_tensor(query, pred, trainflag, grid_size=(61,61))
+            similarity[i] = match_batch_tensor(query, pred, trainflag, grid_size=(H, W))
         return similarity
     else:
         query = features_1
         preds = features_2
         query,preds = query.view(H*W, C),preds.view(B, H*W, C)
-        scores = match_batch_tensor(query, preds,trainflag, grid_size=(61,61))
+        scores = match_batch_tensor(query, preds,trainflag, grid_size=(H, W))
         return scores
