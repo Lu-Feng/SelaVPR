@@ -40,7 +40,8 @@ def test(args, eval_ds, model, test_method="hard_resize", pca=None):
                                         batch_size=args.infer_batch_size, pin_memory=(args.device=="cuda"))
         
         all_features = np.empty((len(eval_ds), args.features_dim), dtype="float32")
-        all_local_features = np.empty((len(eval_ds),61,61,128), dtype="float32")
+        W, H, C = args.dense_feature_map_size
+        all_local_features = np.empty((len(eval_ds), W, H, C), dtype="float32")
 
         for inputs, indices in tqdm(database_dataloader, ncols=100):
             local_features, features = model(inputs.to(args.device))
