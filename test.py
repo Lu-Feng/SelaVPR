@@ -205,7 +205,7 @@ def test_efficient_ram_usage(args, eval_ds, model, test_method="hard_resize"):
     recalls_str =", ".join([f"R@{val}: {rec:.1f}" for val, rec in zip(args.recall_values, recalls)])
     logging.info(f"First ranking recalls: {recalls_str}")
 
-    predictions = rerank(predictions,queries_features_save_dir,database_features_save_dir)
+    predictions = rerank_efficient_ram_usage(predictions,queries_features_save_dir,database_features_save_dir)
 
     #### For each query, check if the predictions are correct
     positives_per_query = eval_ds.get_positives()
