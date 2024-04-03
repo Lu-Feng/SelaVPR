@@ -92,7 +92,6 @@ def test(args, eval_ds, model, test_method="hard_resize", pca=None):
         for i, n in enumerate(args.recall_values):
             if np.any(np.in1d(pred[:n], positives_per_query[query_index])):
                 recalls[i:] += 1
-                # print(query_index,n)
                 break
     # Divide by the number of queries*100, so the recalls are in percentages
     recalls = recalls / eval_ds.queries_num * 100
@@ -109,7 +108,6 @@ def test(args, eval_ds, model, test_method="hard_resize", pca=None):
         for i, n in enumerate(args.recall_values):
             if np.any(np.in1d(pred[:n], positives_per_query[query_index])):
                 recalls[i:] += 1
-                # print(query_index,n)
                 break
     # Divide by the number of queries*100, so the recalls are in percentages
     recalls = recalls / eval_ds.queries_num * 100
@@ -158,10 +156,10 @@ def test_efficient_ram_usage(args, eval_ds, model, test_method="hard_resize"):
             local_features, features = model(inputs.to(args.device))
             features = features.cpu().numpy()
             local_features = local_features.cpu().numpy()
-            for i in range(len(indices)):
-                # print(eval_ds.database_paths[i].split("/")[-1].strip(".jpg"))  
-                # features_name = eval_ds.database_paths[i].split("/")[-1].replace("jpg","npy")
-                features_path = join(database_features_save_dir, str(indices.numpy()[i])+".npy")
+            for i in range(len(indices)): 
+                features_name = eval_ds.database_paths[indices[i]].split("/")[-1].replace("jpg","npy")
+                features_path = join(database_features_save_dir, features_name)
+                # features_path = join(database_features_save_dir, str(indices.numpy()[i])+".npy")
                 np.save(features_path, local_features[i]) 
             all_features[indices.numpy(), :] = features
         
@@ -176,7 +174,9 @@ def test_efficient_ram_usage(args, eval_ds, model, test_method="hard_resize"):
             features = features.cpu().numpy()
             local_features = local_features.cpu().numpy()
             for i in range(len(indices)):
-                features_path = join(queries_features_save_dir, str(indices.numpy()[i]-eval_ds.database_num)+".npy")
+                features_name = eval_ds.queries_paths[indices.numpy()[i]-eval_ds.database_num].split("/")[-1].replace("jpg","npy")
+                features_path = join(queries_features_save_dir, features_name)
+                # features_path = join(queries_features_save_dir, str(indices.numpy()[i]-eval_ds.database_num)+".npy")
                 np.save(features_path, local_features[i]) 
             all_features[indices.numpy(), :] = features
     
@@ -198,14 +198,13 @@ def test_efficient_ram_usage(args, eval_ds, model, test_method="hard_resize"):
         for i, n in enumerate(args.recall_values):
             if np.any(np.in1d(pred[:n], positives_per_query[query_index])):
                 recalls[i:] += 1
-                # print(query_index,n)
                 break
     # Divide by the number of queries*100, so the recalls are in percentages
     recalls = recalls / eval_ds.queries_num * 100
     recalls_str =", ".join([f"R@{val}: {rec:.1f}" for val, rec in zip(args.recall_values, recalls)])
     logging.info(f"First ranking recalls: {recalls_str}")
 
-    predictions = rerank_efficient_ram_usage(predictions,queries_features_save_dir,database_features_save_dir)
+    predictions = rerank_efficient_ram_usage(predictions, eval_ds.queries_paths, eval_ds.database_paths, queries_features_save_dir, database_features_save_dir)
 
     #### For each query, check if the predictions are correct
     positives_per_query = eval_ds.get_positives()
@@ -215,25 +214,28 @@ def test_efficient_ram_usage(args, eval_ds, model, test_method="hard_resize"):
         for i, n in enumerate(args.recall_values):
             if np.any(np.in1d(pred[:n], positives_per_query[query_index])):
                 recalls[i:] += 1
-                # print(query_index,n)
                 break
     # Divide by the number of queries*100, so the recalls are in percentages
     recalls = recalls / eval_ds.queries_num * 100
     recalls_str = ", ".join([f"R@{val}: {rec:.1f}" for val, rec in zip(args.recall_values, recalls)])
     return recalls, recalls_str
 
-def rerank_efficient_ram_usage(predictions,queries_features_save_dir,database_features_save_dir):
+def rerank_efficient_ram_usage(predictions, queries_paths, database_paths, queries_features_dir, database_features_dir):
     pred2 = []
     print("reranking...")
     for query_index, pred in enumerate(tqdm(predictions)):
-        query_features_path = join(queries_features_save_dir, str(query_index)+".npy")
+        # query_features_path = join(queries_features_dir, str(query_index)+".npy")
+        features_name = queries_paths[query_index].split("/")[-1].replace("jpg","npy")
+        query_features_path = join(queries_features_dir, features_name)
         query_local_features = np.load(query_features_path)
         query_local_features = torch.Tensor(query_local_features).cuda()
         
         W, H, C = query_local_features.shape
         candidates_local_features = np.empty((len(pred), W, H, C), dtype="float32")
         for i in range(len(pred)):
-            predi_features_path = join(database_features_save_dir, str(pred[i])+".npy")
+            # predi_features_path = join(database_features_dir, str(pred[i])+".npy")
+            features_name = database_paths[pred[i]].split("/")[-1].replace("jpg","npy")
+            predi_features_path = join(database_features_dir, features_name)
             candidates_local_features[i] = np.load(predi_features_path)
         candidates_local_features = torch.Tensor(candidates_local_features).cuda()
         rerank_index = local_sim(query_local_features,candidates_local_features).cpu().numpy().argsort()[::-1]
