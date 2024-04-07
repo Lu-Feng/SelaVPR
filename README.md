@@ -55,12 +55,6 @@ Further finetuning on Pitts30k
 python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth
 ```
 
-## Test
-Set rerank_num=100 to reproduce the results in paper, and set rerank_num=20 to achieve a close result with only 1/5 re-ranking runtime (0.018s for a query).
-```
-python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100
-```
-
 ## Trained Models
 The model finetuned on MSLS (for diverse scenes).
 <table>
@@ -136,6 +130,32 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </tbody>
 </table>
 
+## Test
+Set rerank_num=100 to reproduce the results in paper, and set rerank_num=20 to achieve a close result with only 1/5 re-ranking runtime (0.018s for a query).
+```
+python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100
+```
+
+### Efficient RAM Usage (optional)
+The test_efficient_ram_usage() function in test.py is used to address the issue of "RAM out of memory" (this issue may cause the program to be killed). You can use it simply by adding "--efficient_ram_testing" to the (train or test) run command, for example
+
+```
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth --efficient_ram_testing
+```
+
+```
+python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100 --efficient_ram_testing
+```
+
+### More Details about Datasets
+MSLS-val: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [Visual Geo-localization Benchmark](https://github.com/gmberton/deep-visual-geo-localization-benchmark) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
+
+Nordland-test: Download the Downsampled version [here](http://webdiis.unizar.es/~jmfacil/pr-nordland/).
+
+## Related Work
+
+**Our another work CricaVPR (one-stage VPR based on DINOv2) presents a multi-scale convolution-enhanced adaptation method and achieves SOTA performance on several datasets. The code is released at [HERE](https://github.com/Lu-Feng/CricaVPR).**
+
 ## Acknowledgements
 Parts of this repo are inspired by the following repositories:
 
@@ -144,7 +164,7 @@ Parts of this repo are inspired by the following repositories:
 [DINOv2](https://github.com/facebookresearch/dinov2)
 
 ## Citation
-If you find this repo useful for your research, please consider citing the paper
+If you find this repo useful for your research, please consider leaving a star⭐️ and citing the paper
 ```
 @inproceedings{selavpr,
   title={Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition},
