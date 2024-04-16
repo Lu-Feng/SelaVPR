@@ -137,7 +137,7 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 ```
 
 ### Efficient RAM Usage (optional)
-The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can use it by adding `--efficient_ram_testing` to the (train or test) run command, for example
+The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can simply add `--efficient_ram_testing` to the (train or test) run command to use it, for example
 
 ```
 python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth --efficient_ram_testing
