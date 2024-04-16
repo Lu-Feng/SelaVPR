@@ -131,7 +131,7 @@ The model further finetuned on Pitts30k (only for urban scenes).
 </table>
 
 ## Test
-Set rerank_num=100 to reproduce the results in paper, and set rerank_num=20 to achieve a close result with only 1/5 re-ranking runtime (0.018s for a query).
+Set `rerank_num=100` to reproduce the results in paper, and set `rerank_num=20` to achieve a close result with only 1/5 re-ranking runtime (0.018s for a query).
 ```
 python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100
 ```
@@ -148,7 +148,7 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 ```
 
 ### More Details about Datasets
-`MSLS-val`: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [Geo-localization Benchmark](https://github.com/gmberton/VPR-datasets-downloader) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
+`MSLS-val`: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [VPR-datasets-downloader](https://github.com/gmberton/VPR-datasets-downloader) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
 
 `Nordland-test`: Download the Downsampled version [here](http://webdiis.unizar.es/~jmfacil/pr-nordland/).
 
