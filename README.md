@@ -13,9 +13,9 @@ This is the official repository for the ICLR 2024 paper "[Towards Seamless Adapt
 ## Summary
 This paper presents a novel method to realize **Se**am**l**ess **a**daptation of pre-trained foundation models for the (two-stage) VPR task, named **SelaVPR**. By adding a few tunable lightweight adapters to the frozen pre-trained model, we achieve an efficient hybrid global-local adaptation to get both global features for retrieving candidate places and dense local features for re-ranking. The SelaVPR feature representation can focus on discriminative landmarks, thus closing the gap between the pre-training and VPR tasks (fully unleash the capability of pre-trained models for VPR). SelaVPR can directly match the local features without spatial verification, making the re-ranking much faster.
 
-The global adaptation is achieved by adding adapters after the multi-head attention layer and in parallel to the MLP layer in each transformer block (see adapter1 and adapter2 in /backbone/dinov2/block.py).
+The global adaptation is achieved by adding adapters after the multi-head attention layer and in parallel to the MLP layer in each transformer block (see adapter1 and adapter2 in `/backbone/dinov2/block.py`).
 
-The local adaptation is implemented by adding up-convolutional layers after the entire ViT backbone to upsample the feature map and get dense local features (see LocalAdapt in network.py).
+The local adaptation is implemented by adding up-convolutional layers after the entire ViT backbone to upsample the feature map and get dense local features (see LocalAdapt in `network.py`).
 
 ## Getting Started
 
@@ -137,7 +137,7 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 ```
 
 ### Efficient RAM Usage (optional)
-The test_efficient_ram_usage() function in test.py is used to address the issue of "RAM out of memory" (this issue may cause the program to be killed). You can use it simply by adding "--efficient_ram_testing" to the (train or test) run command, for example
+The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can use it simply by adding `--efficient_ram_testing` to the (train or test) run command, for example
 
 ```
 python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --queries_per_epoch=5000 --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth --efficient_ram_testing
@@ -148,9 +148,9 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 ```
 
 ### More Details about Datasets
-MSLS-val: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [Geo-localization Benchmark](https://github.com/gmberton/VPR-datasets-downloader) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
+`MSLS-val`: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [Geo-localization Benchmark](https://github.com/gmberton/VPR-datasets-downloader) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
 
-Nordland-test: Download the Downsampled version [here](http://webdiis.unizar.es/~jmfacil/pr-nordland/).
+`Nordland-test`: Download the Downsampled version [here](http://webdiis.unizar.es/~jmfacil/pr-nordland/).
 
 ## Related Work
 
