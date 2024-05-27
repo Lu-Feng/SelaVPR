@@ -73,7 +73,10 @@ class GeoLocalizationNet(nn.Module):
 
 
 def get_backbone(args):
-    backbone = vit_large(patch_size=14,img_size=518,init_values=1,block_chunks=0) 
+    if args.registers:
+        backbone = vit_large(patch_size=14,img_size=518,init_values=1,block_chunks=0, num_register_tokens=4)
+    else:
+        backbone = vit_large(patch_size=14,img_size=518,init_values=1,block_chunks=0) 
     assert not (args.foundation_model_path is None and args.resume is None), "Please specify foundation model path."
     if args.foundation_model_path:
         model_dict = backbone.state_dict()
