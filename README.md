@@ -136,6 +136,22 @@ Set `rerank_num=100` to reproduce the results in paper, and set `rerank_num=20` 
 python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=pitts30k --resume=/path/to/finetuned/pitts30k/model/SelaVPR_pitts30k.pth --rerank_num=100
 ```
 
+### Local Matching using DINOv2+Registers
+
+By adding registers, DINOv2 can achieve better local matching performance. A pre-trained DINOv2+registers model can be downloaded [HERE](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_reg4_pretrain.pth).
+
+You can simply add `--registers` to the (train or test) run command and load the model with registers to use the SelaVPR model based on DINOv2+registers backbone, for example
+
+```
+python3 train.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=msls --queries_per_epoch=30000 --foundation_model_path=/path/to/pre-trained/dinov2_vitl14_reg4_pretrain.pth --registers
+```
+
+```
+python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_name=msls --resume=/path/to/finetuned/msls/model/SelaVPR_reg4_msls.pth --rerank_num=100 --registers
+```
+
+The finetuned (on MSLS) SelaVPR model with registers can be downloaded [HERE](https://drive.google.com/file/d/16Qkr6MGe3k0kYtFfw3YLQXZFn4c9YvJk/view?usp=sharing).
+
 ### Efficient RAM Usage (optional)
 The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can simply add `--efficient_ram_testing` to the (train or test) run command to use it, for example
 
