@@ -1,23 +1,4 @@
 
-"""
-With this script you can evaluate checkpoints or test models from two popular
-landmark retrieval github repos.
-The first is https://github.com/naver/deep-image-retrieval from Naver labs, 
-provides ResNet-50 and ResNet-101 trained with AP on Google Landmarks 18 clean.
-$ python eval.py --off_the_shelf=naver --l2=none --backbone=resnet101conv5 --aggregation=gem --fc_output_dim=2048
-
-The second is https://github.com/filipradenovic/cnnimageretrieval-pytorch from
-Radenovic, provides ResNet-50 and ResNet-101 trained with a triplet loss
-on Google Landmarks 18 and sfm120k.
-$ python eval.py --off_the_shelf=radenovic_gldv1 --l2=after_pool --backbone=resnet101conv5 --aggregation=gem --fc_output_dim=2048
-$ python eval.py --off_the_shelf=radenovic_sfm --l2=after_pool --backbone=resnet101conv5 --aggregation=gem --fc_output_dim=2048
-
-Note that although the architectures are almost the same, Naver's
-implementation does not use a l2 normalization before/after the GeM aggregation,
-while Radenovic's uses it after (and we use it before, which shows better
-results in VG)
-"""
-
 import imp
 import os
 import sys
