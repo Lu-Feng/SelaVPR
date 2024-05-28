@@ -152,6 +152,12 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 
 The finetuned (on MSLS) SelaVPR model with registers can be downloaded [HERE](https://drive.google.com/file/d/16Qkr6MGe3k0kYtFfw3YLQXZFn4c9YvJk/view?usp=sharing).
 
+For the (dense or coarse) local matching between two images, run
+
+```
+python3 visualize_pairs.py --datasets_folder=./ --resume=/path/to/finetuned/msls/model/SelaVPR_reg4_msls.pth --registers
+```
+
 ### Efficient RAM Usage (optional)
 The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can simply add `--efficient_ram_testing` to the (train or test) run command to use it, for example
 
