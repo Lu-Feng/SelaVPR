@@ -11,6 +11,8 @@ import warnings
 warnings.filterwarnings('ignore')
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+###### Modify parameters "match_pattern", "imgpath0" and "imgpath1" according to your needs.
+match_pattern = "dense"  # "dense" for matching dense local features (61*61) ; "coarse" for matching coarse patch tokens (16*16)
 imgpath0 = "./image/img_pair/img0.jpg"
 imgpath1 = "./image/img_pair/img1.jpg"
 
@@ -22,16 +24,23 @@ t = transforms.Compose([transforms.Resize((224, 224)),
 def get_patchfeature(model,imgpath):
     img = Image.open(imgpath)
     img = t(img).unsqueeze(0).to(args.device)
-    feature = model.module.backbone(img)
-    feature = feature["x_norm_patchtokens"]
-    feature = torch.nn.functional.normalize(feature, p=2, dim=-1)
+    if match_pattern == "dense":
+        feature, _ = model(img)
+        feature = feature.view(1,61*61,128)
+    elif match_pattern == "coarse":  
+        feature = model.module.backbone(img)
+        feature = feature["x_norm_patchtokens"]
+        feature = torch.nn.functional.normalize(feature, p=2, dim=-1)
     return feature
 
 def get_keypoints(img_size): 
     H,W = img_size
-    patch_size = 14 #224/16
-    N_h = H//patch_size
-    N_w = W//patch_size
+    if match_pattern == "dense":
+        patch_size = 224/61
+    elif match_pattern == "coarse":
+        patch_size = 14
+    N_h = int(H/patch_size)
+    N_w = int(W/patch_size)
     keypoints = np.zeros((2, N_h*N_w), dtype=int) #(x,y)
     keypoints[0] = np.tile(np.linspace(patch_size//2, W-patch_size//2, N_w, 
                                        dtype=int), N_h)
@@ -58,6 +67,14 @@ def match_batch_tensor(fm1, fm2, img_size):
         idx1 = torch.nonzero(valid[i,:]).squeeze()
         idx2 = max1[i,:][idx1]
         assert idx1.shape==idx2.shape
+
+        ############## Filter the nearest neighbor matches by homography verification ###############
+        ### This is not necessary for VPR and not used in SelaVPR. You can comment these four lines of code
+        thetaGT, mask = cv2.findFundamentalMat(kps[idx1.cpu().numpy()],kps[idx2.cpu().numpy()], cv2.FM_RANSAC,
+                                        ransacReprojThreshold=5)
+        idx1 = idx1[np.where(mask==1)[0]]
+        idx2 = idx2[np.where(mask==1)[0]] 
+        ##############       
 
         cv_im_one = cv2.resize(cv2.imread(imgpath0),(224,224))
         cv_im_two = cv2.resize(cv2.imread(imgpath1),(224,224))
