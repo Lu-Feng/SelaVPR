@@ -158,6 +158,13 @@ For the (dense or coarse) local matching between two images, run
 python3 visualize_pairs.py --datasets_folder=./ --resume=/path/to/finetuned/msls/model/SelaVPR_reg4_msls.pth --registers
 ```
 
+### HeatMap Visualization
+To obtain the heatmap of an input image, run
+```
+python3 visual.py --datasets_folder=/home/lufeng/data/VPR/datasets_vg/datasets --resume=/path/to/finetuned/msls/model/SelaVPR_msls.pth
+```
+
+
 ### Efficient RAM Usage (optional)
 The `test_efficient_ram_usage()` function in `test.py` is used to address the issue of `RAM out of memory` (this issue may cause the program to be killed). This function saves the extracted local features in `./output_local_features/` and loads only the local features currently needed into RAM each time. You can simply add `--efficient_ram_testing` to the (train or test) run command to use it, for example
 
@@ -173,10 +180,6 @@ python3 eval.py --datasets_folder=/path/to/your/datasets_vg/datasets --dataset_n
 `MSLS-val`: We use the official version of [MSLS-val](https://github.com/mapillary/mapillary_sls) (only contains 740 query images) for testing, which is a subset of the MSLS-val formated by [VPR-datasets-downloader](https://github.com/gmberton/VPR-datasets-downloader) (contains about 11k query images). More detail can be found [here](https://github.com/Lu-Feng/SelaVPR/issues/1).
 
 `Nordland-test`: Download the Downsampled version [here](http://webdiis.unizar.es/~jmfacil/pr-nordland/).
-
-## Related Work
-
-**Our another work CricaVPR (one-stage VPR based on DINOv2) presents a multi-scale convolution-enhanced adaptation method and achieves SOTA performance on several datasets. The code is released at [HERE](https://github.com/Lu-Feng/CricaVPR).**
 
 ## Acknowledgements
 Parts of this repo are inspired by the following repositories:
