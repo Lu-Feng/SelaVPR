@@ -1,6 +1,6 @@
 # SelaVPR
 
-🆕 **[Feb 2026]** The code and models of SelaVPR++ are now released at a separate [repository](https://github.com/Lu-Feng/SelaVPRplusplus).
+🆕 **[Feb 2026]** The code and models for **SelaVPR++** have been released in a separate [repository](https://github.com/Lu-Feng/SelaVPRplusplus).
 
 This is the official repository for the ICLR 2024 paper "[Towards Seamless Adaptation of Pre-trained Models for Visual Place Recognition](https://openreview.net/pdf?id=TVg6hlfsKa)".
 
